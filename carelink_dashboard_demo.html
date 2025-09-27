@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareLink Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            overflow: hidden;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .call-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .call-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #48bb78;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #68d391;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .specialist-info {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .dashboard-grid {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            overflow-y: auto;
+        }
+
+        .main-panel {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .status-pending { background: #fed7d7; color: #742a2a; }
+        .status-verified { background: #bee3f8; color: #1a365d; }
+
+        .language-detection {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .translation-box {
+            background: #f7fafc;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .original-text {
+            font-style: italic;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+
+        .translated-text {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .client-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #38b2ac;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #2d3748;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .call-history {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: #f7fafc;
+        }
+
+        .history-item > div:last-child {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .history-date {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .history-reason {
+            font-size: 14px;
+            color: #2d3748;
+            margin-top: 2px;
+        }
+
+        .history-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .privacy-panel {
+            background: #fffaf0;
+            border: 2px solid #f6ad55;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .privacy-title {
+            color: #c05621;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .privacy-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #744210;
+        }
+
+        .privacy-check {
+            color: #38a169;
+            font-weight: bold;
+        }
+
+        .ai-recommendations {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+            color: white;
+            border: none;
+        }
+
+        .ai-rec-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #ed8936;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .ai-rec-priority {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fbb6ce;
+            margin-bottom: 4px;
+        }
+
+        .ai-rec-text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .ai-action-button {
+            background: #ed8936;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .ai-action-button:hover {
+            background: #dd6b20;
+        }
+
+        .live-translation {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+        }
+
+        .translation-input-area {
+            margin-top: 15px;
+        }
+
+        .dictation-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .dictation-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dictation-btn.recording {
+            animation: recordingPulse 1.5s infinite;
+        }
+
+        @keyframes recordingPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .dictation-status {
+            font-size: 14px;
+            color: #d1fae5;
+            font-weight: 500;
+        }
+
+        .live-translation-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .live-english, .live-spanish {
+            margin: 12px 0;
+        }
+
+        .live-english strong, .live-spanish strong {
+            color: #d1fae5;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .english-text, .spanish-text {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.5;
+            border-left: 4px solid #34d399;
+        }
+
+        .translation-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .translation-actions .btn {
+            font-size: 13px;
+            padding: 8px 16px;
+        }
+
+        .risk-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .risk-high {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .risk-medium {
+            background: #feebc8;
+            color: #dd6b20;
+        }
+
+        .risk-low {
+            background: #c6f6d5;
+            color: #38a169;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Teal triangle (top) -->
+                        <polygon points="200,20 330,150 70,150" fill="#20b2aa"/>
+                        
+                        <!-- Blue triangle (left) -->
+                        <polygon points="70,150 50,280 180,280" fill="#6366f1"/>
+                        
+                        <!-- Orange triangle (right) -->
+                        <polygon points="330,150 350,280 220,280" fill="#f59e0b"/>
+                        
+                        <!-- Central network diagram -->
+                        <g fill="none" stroke="#7c3aed" stroke-width="2">
+                            <!-- Central node -->
+                            <circle cx="200" cy="170" r="8" fill="#7c3aed"/>
+                            
+                            <!-- Outer nodes -->
+                            <circle cx="170" cy="140" r="4" fill="#7c3aed"/>
+                            <circle cx="230" cy="140" r="4" fill="#7c3aed"/>
+                            <circle cx="170" cy="200" r="4" fill="#7c3aed"/>
+                            <circle cx="230" cy="200" r="4" fill="#7c3aed"/>
+                            <circle cx="200" cy="120" r="4" fill="#7c3aed"/>
+                            <circle cx="200" cy="220" r="4" fill="#7c3aed"/>
+                            
+                            <!-- Connecting lines -->
+                            <line x1="200" y1="170" x2="170" y2="140"/>
+                            <line x1="200" y1="170" x2="230" y2="140"/>
+                            <line x1="200" y1="170" x2="170" y2="200"/>
+                            <line x1="200" y1="170" x2="230" y2="200"/>
+                            <line x1="200" y1="170" x2="200" y2="120"/>
+                            <line x1="200" y1="170" x2="200" y2="220"/>
+                            
+                            <!-- Cross connections -->
+                            <line x1="170" y1="140" x2="200" y2="120"/>
+                            <line x1="230" y1="140" x2="200" y2="120"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="brand-name">CareLink</div>
+            </div>
+            
+            <div class="nav-item active">📞 Active Calls</div>
+            <div class="nav-item">📊 Analytics</div>
+            <div class="nav-item">👥 Contacts</div>
+            <div class="nav-item">📋 Cases</div>
+            <div class="nav-item">🔒 Security</div>
+            <div class="nav-item">⚙️ Settings</div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div class="call-info">
+                    <div class="call-status">
+                        <div class="live-indicator"></div>
+                        LIVE CALL
+                    </div>
+                    <div>
+                        <div><strong>Incoming:</strong> +1 (412) 555-0198</div>
+                        <div class="specialist-info">Specialist: Natalie Mitchell | Duration: 2:34</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">🔇 Mute</button>
+                    <button class="btn btn-primary" style="margin-left: 8px;">📝 Notes</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="main-panel">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">👤 Client Information</div>
+                            <div class="status-badge status-verified">AUTHORIZED CONTACT</div>
+                        </div>
+                        <div class="client-info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Client ID</div>
+                                <div class="info-value">#EH-456789</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Client Name</div>
+                                <div class="info-value">Elena Hernández</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Caller</div>
+                                <div class="info-value">Carlos Hernández (Son)</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Primary Language</div>
+                                <div class="info-value">Spanish</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Active Services</div>
+                                <div class="info-value">Housing, Mental Health</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Communication Pattern</div>
+                                <div class="info-value">Multiple contact attempts</div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">🏠 Connect Housing (Spanish)</button>
+                            <button class="btn btn-primary">🧠 Connect Mental Health</button>
+                            <button class="btn btn-secondary">📄 View Full Record</button>
+                        </div>
+                    </div>
+
+                    <div class="card ai-recommendations">
+                        <div class="card-header">
+                            <div class="card-title">🤖 AI Agent Recommendations</div>
+                            <div class="status-badge" style="background: #ed8936; color: white;">HIGH PRIORITY</div>
+                        </div>
+                        
+                        <div class="ai-rec-item">
+                            <div class="ai-rec-priority">IMMEDIATE ACTION</div>
+                            <div class="ai-rec-text">Escalate caseworker communication issue to Housing Supervisor Maria Santos. Pattern shows 3 unreturned calls over 16 days.</div>
+                            <button class="ai-action-button">Auto-Transfer to Supervisor</button>
+                        </div>
+                        
+                        <div class="ai-rec-item">
+                            <div class="ai-rec-priority">COORDINATION NEEDED</div>
+                            <div class="ai-rec-text">Schedule joint intake for Housing + Mental Health services to avoid duplicate assessments and reduce client burden.</div>
+                            <button class="ai-action-button">Schedule Joint Appointment</button>
+                        </div>
+                        
+                        <div class="ai-rec-item">
+                            <div class="ai-rec-priority">CULTURAL CONSIDERATION</div>
+                            <div class="ai-rec-text">Request Spanish-speaking caseworker assignment. Client prefers native language communication based on call patterns.</div>
+                            <button class="ai-action-button">Update Language Preference</button>
+                        </div>
+                    </div>
+
+                    <div class="card live-translation">
+                        <div class="card-header">
+                            <div class="card-title">🎤 Live Response Translation</div>
+                            <div class="status-badge" style="background: #10b981; color: white;">READY</div>
+                        </div>
+                        <div class="translation-input-area">
+                            <div class="dictation-controls">
+                                <button class="dictation-btn recording" id="dictateBtn">
+                                    <span class="mic-icon">🎤</span>
+                                    <span class="dictation-text">Hold to Dictate</span>
+                                </button>
+                                <div class="dictation-status">English → Spanish Translation Active</div>
+                            </div>
+                            <div class="live-translation-box">
+                                <div class="live-english">
+                                    <strong>Your English Response:</strong>
+                                    <div class="english-text" id="englishText">I understand your frustration about the caseworker not returning calls. Let me connect you directly with the housing supervisor who can help resolve this immediately...</div>
+                                </div>
+                                <div class="live-spanish">
+                                    <strong>Live Spanish Translation:</strong>
+                                    <div class="spanish-text" id="spanishText">Entiendo tu frustración por que el trabajador social no devuelva las llamadas. Permíteme conectarte directamente con el supervisor de vivienda que puede ayudar a resolver esto inmediatamente...</div>
+                                </div>
+                            </div>
+                            <div class="translation-actions">
+                                <button class="btn btn-primary">📢 Send to Caller</button>
+                                <button class="btn btn-secondary">🔄 Retry Translation</button>
+                                <button class="btn btn-secondary">✏️ Edit Response</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card language-detection">
+                        <div class="card-header">
+                            <div class="card-title">🌐 Language Detection & Translation</div>
+                            <div class="status-badge status-active">SPANISH DETECTED</div>
+                        </div>
+                        <div class="translation-box">
+                            <div class="original-text">"Hola, necesito ayuda con el voucher de vivienda de mi mamá, pero también creo que necesita servicios de salud mental, y mi trabajador social nunca me devuelve las llamadas..."</div>
+                            <div class="translated-text">"Hello, I need help with my mom's housing voucher, but I also think she needs mental health services, and my caseworker never calls me back..."</div>
+                        </div>
+                        <div><strong>Call Classification:</strong> Multi-service inquiry detected - Housing + Mental Health</div>
+                    </div>
+
+                    <div class="privacy-panel">
+                        <div class="privacy-title">
+                            🔒 Privacy Safeguards Active
+                        </div>
+                        <div class="privacy-item">
+                            <span class="privacy-check">✓</span> Client ID displayed after authorization confirmed
+                        </div>
+                        <div class="privacy-item">
+                            <span class="privacy-check">✓</span> All data access logged with client ID #EH-456789
+                        </div>
+                        <div class="privacy-item">
+                            <span class="privacy-check">✓</span> Cross-department sharing requires consent verification
+                        </div>
+                        <div class="privacy-item">
+                            <span class="privacy-check">✓</span> Encrypted translation with automatic session deletion
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📞 Previous Call History</div>
+                        <div class="status-badge status-pending">5 TOTAL CALLS</div>
+                    </div>
+                    <div class="call-history">
+                        <div class="history-item">
+                            <div>
+                                <div class="history-date">Sept 18, 2025</div>
+                                <div class="history-reason">Carlos called - Housing voucher approved but inspection scheduled 3 weeks out. Frustrated about timeline but understanding.</div>
+                            </div>
+                            <div>
+                                <div class="history-status status-active">Resolved</div>
+                                <div class="risk-score risk-low">🟢 Low Risk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-item">
+                            <div>
+                                <div class="history-date">Sept 10, 2025</div>
+                                <div class="history-reason">Carlos called - Mom hasn't heard from caseworker in 2 weeks. Housing inspection delayed. Growing anxiety about losing voucher.</div>
+                            </div>
+                            <div>
+                                <div class="history-status status-pending">Follow-up needed</div>
+                                <div class="risk-score risk-high">🔴 High Risk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-item">
+                            <div>
+                                <div class="history-date">Aug 28, 2025</div>
+                                <div class="history-reason">Carlos called - Mom showing signs of depression, not eating well. Worried about her mental state during housing transition.</div>
+                            </div>
+                            <div>
+                                <div class="history-status status-active">Referred</div>
+                                <div class="risk-score risk-medium">🟡 Medium Risk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-item">
+                            <div>
+                                <div class="history-date">Aug 15, 2025</div>
+                                <div class="history-reason">Carlos called - Successfully submitted housing application. Grateful for Spanish-speaking assistance. Optimistic about outcome.</div>
+                            </div>
+                            <div>
+                                <div class="history-status status-active">Completed</div>
+                                <div class="risk-score risk-low">🟢 Low Risk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-item">
+                            <div>
+                                <div class="history-date">July 22, 2025</div>
+                                <div class="history-reason">Carlos called - Initial call, overwhelmed managing mom's care. Needs housing + mental health services. Emotional but determined.</div>
+                            </div>
+                            <div>
+                                <div class="history-status status-active">Processed</div>
+                                <div class="risk-score risk-medium">🟡 Medium Risk</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                        <div class="card-title" style="font-size: 16px; margin-bottom: 10px;">🤖 AI Insights</div>
+                        <div style="background: #f0fff4; padding: 12px; border-radius: 8px; border-left: 4px solid #48bb78;">
+                            <div style="font-size: 14px; color: #276749;">
+                                <strong>Pattern Detected:</strong> Recurring communication issues with assigned caseworker. Consider escalation to supervisor or reassignment.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
