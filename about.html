@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareLink Process Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4CAF50;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .flow-container {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        .flow-step {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-left: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .start-step {
+            border-left-color: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-align: center;
+        }
+        
+        .decision-step {
+            border-left-color: #f39c12;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+        
+        .office-hours {
+            border-left-color: #27ae60;
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+        
+        .after-hours {
+            border-left-color: #8e44ad;
+            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            color: white;
+        }
+        
+        .high-risk {
+            border-left-color: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .low-risk {
+            border-left-color: #2ecc71;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .logging-step {
+            border-left-color: #34495e;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .step-content {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-content li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .step-content li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .branch-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .risk-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .connector {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .connector::before {
+            content: "↓";
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+            background: white;
+            border: 3px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .branch-label {
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            padding: 10px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .branch-container, .risk-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+        
+        .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 5px 0;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CareLink Process Flow</h1>
+            <p>Intelligent Call Routing & Management System</p>
+        </div>
+        
+        <div class="flow-container">
+            <!-- Start -->
+            <div class="flow-step start-step">
+                <div class="step-title">
+                    <div class="step-icon">📞</div>
+                    START: Client Makes a Call
+                </div>
+                <div class="step-content">
+                    Initial contact point for all client inquiries
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Step 1 Decision -->
+            <div class="flow-step decision-step">
+                <div class="step-title">
+                    <div class="step-icon">⏰</div>
+                    Step 1: Check Call Time
+                </div>
+                <div class="step-content">
+                    System determines if call is within or outside office hours
+                </div>
+            </div>
+            
+            <!-- Branch Container -->
+            <div class="branch-container">
+                <!-- Office Hours Branch -->
+                <div>
+                    <div class="branch-label">Within Office Hours</div>
+                    <div class="flow-step office-hours">
+                        <div class="step-title">
+                            <div class="step-icon">👥</div>
+                            DHS Agent Handling
+                        </div>
+                        <div class="step-content">
+                            <ul>
+                                <li>DHS agent answers call</li>
+                                <li class="highlight">CareLink activates → listens, transcribes, summarizes</li>
+                                <li>CareLink suggests solutions and prepares note</li>
+                                <li>Call redirected to responsible department</li>
+                                <li>Note stored in database</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- After Hours Branch -->
+                <div>
+                    <div class="branch-label">Outside Office Hours</div>
+                    <div class="flow-step after-hours">
+                        <div class="step-title">
+                            <div class="step-icon">🤖</div>
+                            CareLink Direct Response
+                        </div>
+                        <div class="step-content">
+                            <ul>
+                                <li>CareLink answers directly</li>
+                                <li>Identifies language</li>
+                                <li class="highlight">Transcribes and summarizes</li>
+                                <li>Extracts key information</li>
+                                <li class="highlight">Performs sentiment analysis</li>
+                                <li class="highlight">Assigns risk score</li>
+                                <li>Generates prompt for RAG pipeline</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Step 2 - Risk-Based Routing -->
+            <div class="flow-step decision-step">
+                <div class="step-title">
+                    <div class="step-icon">⚖️</div>
+                    Step 2: Risk-Based Routing (After Hours Only)
+                </div>
+                <div class="step-content">
+                    CareLink evaluates risk level and routes accordingly
+                </div>
+            </div>
+            
+            <!-- Risk Container -->
+            <div class="risk-container">
+                <!-- High Risk -->
+                <div class="flow-step high-risk">
+                    <div class="step-title">
+                        <div class="step-icon">🚨</div>
+                        High Risk Response
+                    </div>
+                    <div class="step-content">
+                        <ul>
+                            <li class="highlight">Auto-reroutes call to emergency 24/7 service</li>
+                            <li>Example: UPMC Psychiatric</li>
+                            <li>Immediate human intervention</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Low Risk -->
+                <div class="flow-step low-risk">
+                    <div class="step-title">
+                        <div class="step-icon">💬</div>
+                        Low Risk Response
+                    </div>
+                    <div class="step-content">
+                        <ul>
+                            <li>CareLink answers in conversational mode</li>
+                            <li class="highlight">Provides FAQs ("Where do I find X?")</li>
+                            <li>Gives recommendations</li>
+                            <li>Suggests calling DHS during office hours for complex issues</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector"></div>
+            
+            <!-- Step 3 - Case Logging -->
+            <div class="flow-step logging-step">
+                <div class="step-title">
+                    <div class="step-icon">📋</div>
+                    Step 3: Case Logging
+                </div>
+                <div class="step-content">
+                    <ul>
+                        <li class="highlight">CareLink stores structured note in database</li>
+                        <li>Operators notified at start of office hours</li>
+                        <li>Operators review unresolved off-hours cases</li>
+                        <li>Continuous improvement through data analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
