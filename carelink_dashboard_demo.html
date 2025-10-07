@@ -3,758 +3,517 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareLink Dashboard</title>
+    <title>Fighting Corruption with Smart Technology</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            color: #2d3748;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0;
+            background: #ffffff;
+            color: #2c3e50;
         }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            height: 100vh;
-        }
-
-        .sidebar {
-            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+        .official-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
             color: white;
-            padding: 20px;
+            padding: 30px 60px;
+            border-bottom: 5px solid #c41e3a;
         }
-
-        .logo-section {
+        .header-content {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            gap: 12px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo svg {
-            width: 30px;
-            height: 30px;
-        }
-
-        .brand-name {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .nav-item {
-            padding: 12px 16px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .nav-item.active {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-rows: auto 1fr;
-            overflow: hidden;
-        }
-
-        .header {
-            background: white;
-            padding: 20px 30px;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
             justify-content: space-between;
-            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
-
-        .call-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .call-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #48bb78;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .live-indicator {
-            width: 8px;
-            height: 8px;
-            background: #68d391;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .specialist-info {
-            font-size: 14px;
-            color: #718096;
-        }
-
-        .dashboard-grid {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
-            overflow-y: auto;
-        }
-
-        .main-panel {
-            display: grid;
-            gap: 20px;
-        }
-
-        .card {
+        .ministry-logo {
+            width: 80px;
+            height: 80px;
             background: white;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .ministry-info {
+            flex-grow: 1;
+            margin-left: 25px;
+        }
+        .ministry-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .ministry-name-ar {
+            font-size: 1.1em;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+            opacity: 0.95;
+        }
+        .republic {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1a365d;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            font-weight: 700;
+            border-bottom: 3px solid #c41e3a;
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #2c5282;
+            font-size: 1.5em;
+            margin-top: 35px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            border-left: 4px solid #c41e3a;
+            padding-left: 16px;
+        }
+        .byline {
+            color: #718096;
+            font-style: italic;
+            margin-bottom: 35px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            background: #f7fafc;
+            border-radius: 6px;
+            border-left: 3px solid #2c5282;
+        }
+        .byline strong {
+            color: #1a365d;
+            font-style: normal;
+            font-size: 1.1em;
+        }
+        p {
+            margin-bottom: 18px;
+            font-size: 1.05em;
+        }
+        .stat-highlight {
+            background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #2c5282;
+        }
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #1a365d;
+            display: block;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .chart-container {
+            margin: 35px 0;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             border: 1px solid #e2e8f0;
         }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
+        .chart-title {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 1.2em;
             color: #2d3748;
-        }
-
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            margin-bottom: 20px;
             font-weight: 600;
+            text-align: center;
         }
-
-        .status-active { background: #c6f6d5; color: #22543d; }
-        .status-pending { background: #fed7d7; color: #742a2a; }
-        .status-verified { background: #bee3f8; color: #1a365d; }
-
-        .language-detection {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-        }
-
-        .translation-box {
-            background: #f7fafc;
-            border-left: 4px solid #4299e1;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .original-text {
-            font-style: italic;
-            color: #718096;
-            margin-bottom: 8px;
-        }
-
-        .translated-text {
-            font-weight: 500;
-            color: #2d3748;
-        }
-
-        .client-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .info-item {
-            background: #f7fafc;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid #38b2ac;
-        }
-
-        .info-label {
-            font-size: 12px;
-            color: #718096;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .info-value {
-            font-size: 14px;
-            color: #2d3748;
-            font-weight: 500;
-            margin-top: 4px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: #4299e1;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #edf2f7;
-            color: #4a5568;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .call-history {
+        canvas {
             max-height: 400px;
-            overflow-y: auto;
         }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            transition: background 0.3s ease;
+        .infographic-container {
+            margin: 35px 0;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
         }
-
-        .history-item:hover {
+        .infographic-title {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 1.3em;
+            color: #1a365d;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .infographic-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+        .action-section {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin: 40px 0;
+            border-top: 5px solid #c41e3a;
+        }
+        .action-section h2 {
+            color: white;
+            border: none;
+            padding: 0;
+            margin-top: 0;
+        }
+        .action-section p {
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        .action-buttons {
+            margin-top: 25px;
+            text-align: center;
+        }
+        .action-btn {
+            display: inline-block;
+            background: white;
+            color: #1a365d;
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            border: 2px solid white;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             background: #f7fafc;
         }
-
-        .history-item > div:last-child {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 6px;
+        .action-list {
+            margin-top: 25px;
+            padding-left: 0;
+            list-style: none;
         }
-
-        .history-date {
-            font-size: 12px;
-            color: #718096;
-            font-weight: 600;
-        }
-
-        .history-reason {
-            font-size: 14px;
-            color: #2d3748;
-            margin-top: 2px;
-        }
-
-        .history-status {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-
-        .privacy-panel {
-            background: #fffaf0;
-            border: 2px solid #f6ad55;
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .privacy-title {
-            color: #c05621;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .privacy-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 8px 0;
-            font-size: 14px;
-            color: #744210;
-        }
-
-        .privacy-check {
-            color: #38a169;
-            font-weight: bold;
-        }
-
-        .ai-recommendations {
-            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
-            color: white;
-            border: none;
-        }
-
-        .ai-rec-item {
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #ed8936;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .ai-rec-priority {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fbb6ce;
-            margin-bottom: 4px;
-        }
-
-        .ai-rec-text {
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .ai-action-button {
-            background: #ed8936;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: background 0.3s ease;
-        }
-
-        .ai-action-button:hover {
-            background: #dd6b20;
-        }
-
-        .live-translation {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-        }
-
-        .translation-input-area {
-            margin-top: 15px;
-        }
-
-        .dictation-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .dictation-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .action-list li {
+            padding: 12px 0 12px 30px;
             position: relative;
-            overflow: hidden;
+            font-size: 1.05em;
         }
-
-        .dictation-btn.recording {
-            animation: recordingPulse 1.5s infinite;
+        .action-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #90cdf4;
         }
-
-        @keyframes recordingPulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        a {
+            color: #2c5282;
+            text-decoration: none;
+            border-bottom: 1px solid #4299e1;
+            transition: all 0.2s ease;
         }
-
-        .dictation-status {
-            font-size: 14px;
-            color: #d1fae5;
-            font-weight: 500;
+        a:hover {
+            color: #1a365d;
+            border-bottom-color: #c41e3a;
         }
-
-        .live-translation-box {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
+        .official-footer {
+            background: #1a365d;
+            color: white;
+            padding: 30px 60px;
+            margin-top: 0;
+            text-align: center;
+            font-size: 0.9em;
         }
-
-        .live-english, .live-spanish {
-            margin: 12px 0;
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
         }
-
-        .live-english strong, .live-spanish strong {
-            color: #d1fae5;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .english-text, .spanish-text {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 15px;
-            line-height: 1.5;
-            border-left: 4px solid #34d399;
-        }
-
-        .translation-actions {
-            display: flex;
-            gap: 10px;
+        .contact-info {
             margin-top: 15px;
+            opacity: 0.9;
         }
-
-        .translation-actions .btn {
-            font-size: 13px;
-            padding: 8px 16px;
+        .footnote {
+            font-size: 0.9em;
+            color: #718096;
+            border-top: 2px solid #e2e8f0;
+            margin-top: 50px;
+            padding-top: 25px;
+            line-height: 1.6;
         }
-
-        .risk-score {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
+        .video-container {
+        margin: 35px 0;
+        padding: 25px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
         }
-
-        .risk-high {
-            background: #fed7d7;
-            color: #c53030;
+        .video-title {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 1.3em;
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
         }
-
-        .risk-medium {
-            background: #feebc8;
-            color: #dd6b20;
+        .video-container video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-
-        .risk-low {
-            background: #c6f6d5;
-            color: #38a169;
+        .video-caption {
+            margin-top: 15px;
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .action-btn {
+                border: 2px solid #1a365d;
+            }
+        }
+        @media (max-width: 600px) {
+            .official-header, .container, .official-footer {
+                padding: 20px;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .ministry-info {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            .ministry-logo {
+                width: 60px;
+                height: 60px;
+            }
+            h1 {
+                font-size: 1.6em;
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+            .stat-number {
+                font-size: 2.2em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="sidebar">
-            <div class="logo-section">
-                <div class="logo">
-                    <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Teal triangle (top) -->
-                        <polygon points="200,20 330,150 70,150" fill="#20b2aa"/>
-                        
-                        <!-- Blue triangle (left) -->
-                        <polygon points="70,150 50,280 180,280" fill="#6366f1"/>
-                        
-                        <!-- Orange triangle (right) -->
-                        <polygon points="330,150 350,280 220,280" fill="#f59e0b"/>
-                        
-                        <!-- Central network diagram -->
-                        <g fill="none" stroke="#7c3aed" stroke-width="2">
-                            <!-- Central node -->
-                            <circle cx="200" cy="170" r="8" fill="#7c3aed"/>
-                            
-                            <!-- Outer nodes -->
-                            <circle cx="170" cy="140" r="4" fill="#7c3aed"/>
-                            <circle cx="230" cy="140" r="4" fill="#7c3aed"/>
-                            <circle cx="170" cy="200" r="4" fill="#7c3aed"/>
-                            <circle cx="230" cy="200" r="4" fill="#7c3aed"/>
-                            <circle cx="200" cy="120" r="4" fill="#7c3aed"/>
-                            <circle cx="200" cy="220" r="4" fill="#7c3aed"/>
-                            
-                            <!-- Connecting lines -->
-                            <line x1="200" y1="170" x2="170" y2="140"/>
-                            <line x1="200" y1="170" x2="230" y2="140"/>
-                            <line x1="200" y1="170" x2="170" y2="200"/>
-                            <line x1="200" y1="170" x2="230" y2="200"/>
-                            <line x1="200" y1="170" x2="200" y2="120"/>
-                            <line x1="200" y1="170" x2="200" y2="220"/>
-                            
-                            <!-- Cross connections -->
-                            <line x1="170" y1="140" x2="200" y2="120"/>
-                            <line x1="230" y1="140" x2="200" y2="120"/>
-                        </g>
-                    </svg>
-                </div>
-                <div class="brand-name">CareLink</div>
+    <div class="official-header">
+        <div class="header-content">
+            <div class="ministry-logo">
+                <img src="ministry_logo.png" alt="Ministry Logo" style="width: 100%; height: 100%; object-fit: fill;">
+                </svg>
             </div>
-            
-            <div class="nav-item active">📞 Active Calls</div>
-            <div class="nav-item">📊 Analytics</div>
-            <div class="nav-item">👥 Contacts</div>
-            <div class="nav-item">📋 Cases</div>
-            <div class="nav-item">🔒 Security</div>
-            <div class="nav-item">⚙️ Settings</div>
-        </div>
-
-        <div class="main-content">
-            <div class="header">
-                <div class="call-info">
-                    <div class="call-status">
-                        <div class="live-indicator"></div>
-                        LIVE CALL
-                    </div>
-                    <div>
-                        <div><strong>Incoming:</strong> +1 (412) 555-0198</div>
-                        <div class="specialist-info">Specialist: Natalie Mitchell | Duration: 2:34</div>
-                    </div>
-                </div>
-                <div>
-                    <button class="btn btn-secondary">🔇 Mute</button>
-                    <button class="btn btn-primary" style="margin-left: 8px;">📝 Notes</button>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="main-panel">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">👤 Client Information</div>
-                            <div class="status-badge status-verified">AUTHORIZED CONTACT</div>
-                        </div>
-                        <div class="client-info-grid">
-                            <div class="info-item">
-                                <div class="info-label">Client ID</div>
-                                <div class="info-value">#EH-456789</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Client Name</div>
-                                <div class="info-value">Elena Hernández</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Caller</div>
-                                <div class="info-value">Carlos Hernández (Son)</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Primary Language</div>
-                                <div class="info-value">Spanish</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Active Services</div>
-                                <div class="info-value">Housing, Mental Health</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Communication Pattern</div>
-                                <div class="info-value">Multiple contact attempts</div>
-                            </div>
-                        </div>
-                        
-                        <div class="action-buttons">
-                            <button class="btn btn-primary">🏠 Connect Housing (Spanish)</button>
-                            <button class="btn btn-primary">🧠 Connect Mental Health</button>
-                            <button class="btn btn-secondary">📄 View Full Record</button>
-                        </div>
-                    </div>
-
-                    <div class="card ai-recommendations">
-                        <div class="card-header">
-                            <div class="card-title">🤖 AI Agent Recommendations</div>
-                            <div class="status-badge" style="background: #ed8936; color: white;">HIGH PRIORITY</div>
-                        </div>
-                        
-                        <div class="ai-rec-item">
-                            <div class="ai-rec-priority">IMMEDIATE ACTION</div>
-                            <div class="ai-rec-text">Escalate caseworker communication issue to Housing Supervisor Maria Santos. Pattern shows 3 unreturned calls over 16 days.</div>
-                            <button class="ai-action-button">Auto-Transfer to Supervisor</button>
-                        </div>
-                        
-                        <div class="ai-rec-item">
-                            <div class="ai-rec-priority">COORDINATION NEEDED</div>
-                            <div class="ai-rec-text">Schedule joint intake for Housing + Mental Health services to avoid duplicate assessments and reduce client burden.</div>
-                            <button class="ai-action-button">Schedule Joint Appointment</button>
-                        </div>
-                        
-                        <div class="ai-rec-item">
-                            <div class="ai-rec-priority">CULTURAL CONSIDERATION</div>
-                            <div class="ai-rec-text">Request Spanish-speaking caseworker assignment. Client prefers native language communication based on call patterns.</div>
-                            <button class="ai-action-button">Update Language Preference</button>
-                        </div>
-                    </div>
-
-                    <div class="card live-translation">
-                        <div class="card-header">
-                            <div class="card-title">🎤 Live Response Translation</div>
-                            <div class="status-badge" style="background: #10b981; color: white;">READY</div>
-                        </div>
-                        <div class="translation-input-area">
-                            <div class="dictation-controls">
-                                <button class="dictation-btn recording" id="dictateBtn">
-                                    <span class="mic-icon">🎤</span>
-                                    <span class="dictation-text">Hold to Dictate</span>
-                                </button>
-                                <div class="dictation-status">English → Spanish Translation Active</div>
-                            </div>
-                            <div class="live-translation-box">
-                                <div class="live-english">
-                                    <strong>Your English Response:</strong>
-                                    <div class="english-text" id="englishText">I understand your frustration about the caseworker not returning calls. Let me connect you directly with the housing supervisor who can help resolve this immediately...</div>
-                                </div>
-                                <div class="live-spanish">
-                                    <strong>Live Spanish Translation:</strong>
-                                    <div class="spanish-text" id="spanishText">Entiendo tu frustración por que el trabajador social no devuelva las llamadas. Permíteme conectarte directamente con el supervisor de vivienda que puede ayudar a resolver esto inmediatamente...</div>
-                                </div>
-                            </div>
-                            <div class="translation-actions">
-                                <button class="btn btn-primary">📢 Send to Caller</button>
-                                <button class="btn btn-secondary">🔄 Retry Translation</button>
-                                <button class="btn btn-secondary">✏️ Edit Response</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card language-detection">
-                        <div class="card-header">
-                            <div class="card-title">🌐 Language Detection & Translation</div>
-                            <div class="status-badge status-active">SPANISH DETECTED</div>
-                        </div>
-                        <div class="translation-box">
-                            <div class="original-text">"Hola, necesito ayuda con el voucher de vivienda de mi mamá, pero también creo que necesita servicios de salud mental, y mi trabajador social nunca me devuelve las llamadas..."</div>
-                            <div class="translated-text">"Hello, I need help with my mom's housing voucher, but I also think she needs mental health services, and my caseworker never calls me back..."</div>
-                        </div>
-                        <div><strong>Call Classification:</strong> Multi-service inquiry detected - Housing + Mental Health</div>
-                    </div>
-
-                    <div class="privacy-panel">
-                        <div class="privacy-title">
-                            🔒 Privacy Safeguards Active
-                        </div>
-                        <div class="privacy-item">
-                            <span class="privacy-check">✓</span> Client ID displayed after authorization confirmed
-                        </div>
-                        <div class="privacy-item">
-                            <span class="privacy-check">✓</span> All data access logged with client ID #EH-456789
-                        </div>
-                        <div class="privacy-item">
-                            <span class="privacy-check">✓</span> Cross-department sharing requires consent verification
-                        </div>
-                        <div class="privacy-item">
-                            <span class="privacy-check">✓</span> Encrypted translation with automatic session deletion
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">📞 Previous Call History</div>
-                        <div class="status-badge status-pending">5 TOTAL CALLS</div>
-                    </div>
-                    <div class="call-history">
-                        <div class="history-item">
-                            <div>
-                                <div class="history-date">Sept 18, 2025</div>
-                                <div class="history-reason">Carlos called - Housing voucher approved but inspection scheduled 3 weeks out. Frustrated about timeline but understanding.</div>
-                            </div>
-                            <div>
-                                <div class="history-status status-active">Resolved</div>
-                                <div class="risk-score risk-low">🟢 Low Risk</div>
-                            </div>
-                        </div>
-                        
-                        <div class="history-item">
-                            <div>
-                                <div class="history-date">Sept 10, 2025</div>
-                                <div class="history-reason">Carlos called - Mom hasn't heard from caseworker in 2 weeks. Housing inspection delayed. Growing anxiety about losing voucher.</div>
-                            </div>
-                            <div>
-                                <div class="history-status status-pending">Follow-up needed</div>
-                                <div class="risk-score risk-high">🔴 High Risk</div>
-                            </div>
-                        </div>
-                        
-                        <div class="history-item">
-                            <div>
-                                <div class="history-date">Aug 28, 2025</div>
-                                <div class="history-reason">Carlos called - Mom showing signs of depression, not eating well. Worried about her mental state during housing transition.</div>
-                            </div>
-                            <div>
-                                <div class="history-status status-active">Referred</div>
-                                <div class="risk-score risk-medium">🟡 Medium Risk</div>
-                            </div>
-                        </div>
-                        
-                        <div class="history-item">
-                            <div>
-                                <div class="history-date">Aug 15, 2025</div>
-                                <div class="history-reason">Carlos called - Successfully submitted housing application. Grateful for Spanish-speaking assistance. Optimistic about outcome.</div>
-                            </div>
-                            <div>
-                                <div class="history-status status-active">Completed</div>
-                                <div class="risk-score risk-low">🟢 Low Risk</div>
-                            </div>
-                        </div>
-                        
-                        <div class="history-item">
-                            <div>
-                                <div class="history-date">July 22, 2025</div>
-                                <div class="history-reason">Carlos called - Initial call, overwhelmed managing mom's care. Needs housing + mental health services. Emotional but determined.</div>
-                            </div>
-                            <div>
-                                <div class="history-status status-active">Processed</div>
-                                <div class="risk-score risk-medium">🟡 Medium Risk</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
-                        <div class="card-title" style="font-size: 16px; margin-bottom: 10px;">🤖 AI Insights</div>
-                        <div style="background: #f0fff4; padding: 12px; border-radius: 8px; border-left: 4px solid #48bb78;">
-                            <div style="font-size: 14px; color: #276749;">
-                                <strong>Pattern Detected:</strong> Recurring communication issues with assigned caseworker. Consider escalation to supervisor or reassignment.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="ministry-info">
+                <div class="ministry-name">Ministry of Information Technology and Artificial Intelligence</div>
+                <div class="ministry-name-ar">وزارة تكنولوجيا المعلومات والذكاء الاصطناعي</div>
+                <div class="republic">Republic of Lebanon | الجمهورية اللبنانية</div>
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <h1>Fighting Corruption with Smart Technology: Lebanon's Path to Transparent Governance</h1>
+        
+        <div class="byline">
+            <strong>H.E. Dr. Kamal Shehadi</strong><br>
+            Minister of State for Technology and Artificial Intelligence<br>
+            October 6, 2025
+        </div>
+
+
+        <div class="video-container">
+            <div class="video-title">A Message from Our Policy Team</div>
+            <video controls poster="" aria-label="Video message from Chris Oueis, Policy Analyst at Heinz Policy Institute and Junior Advisor to the Minister, discussing AI-powered anti-corruption reform in Lebanon's public procurement system">
+                <source src="intro.mp4" type="video/mp4">
+                <p>Your browser does not support the video element. Chris Oueis, Policy Analyst at the Heinz Policy Institute and Junior Advisor to the Minister of Technology and Artificial Intelligence, discusses the importance of implementing AI-powered oversight to combat corruption in Lebanon's public procurement system.</p>
+            </video>
+            <div class="video-caption">
+                <strong>Chris Oueis</strong> – Policy Analyst, Heinz Policy Institute | Junior Advisor to the Minister<br>
+                <em style="font-size: 0.85em; color: #718096;">Note: This video was fully generated using AI technology.</em>
+            </div>
+        </div>
+
+        <p>Every day, Lebanese families witness a troubling paradox. Our schools lack basic supplies, hospitals struggle with essential care, and infrastructure deteriorates—yet the government spends billions annually on public contracts. Too often, this money disappears into inflated contracts serving private interests rather than public needs. As your Minister of State for Technology and Artificial Intelligence, I am committed to changing this reality through artificial intelligence that can detect and prevent corruption before it drains resources meant for our citizens.</p>
+
+        <h2>The Challenge We Face</h2>
+
+        <div class="stat-highlight">
+            <span class="stat-number">$3.4 Billion</span>
+            <p><strong>Lebanon's annual public procurement spending—6.5% of our GDP.</strong> <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/06/governing-with-artificial-intelligence_f0e316f5/26324bc2-en.pdf" target="_blank">OECD research</a> indicates countries with weak oversight can lose up to 70% of procurement funds to corruption.</p>
+        </div>
+
+        <p>Recent investigations expose the severity. At Rafic Hariri International Airport, a routine contract inexplicably inflated five-fold. The Ministry of Telecommunications <a href="https://limslb.com/news-51733/?lang=en" target="_blank">bypassed procurement procedures entirely</a> to award a predetermined contract. With Lebanon ranking 154 out of 180 on <a href="https://www.transparency.org/en/cpi/2024" target="_blank">Transparency International's 2024 index</a>, every inflated contract means fewer teachers, reduced medical supplies, and delayed infrastructure repairs.</p>
+
+        <h2>Evidence-Based Solutions</h2>
+
+        <div class="chart-container">
+            <div class="chart-title">AI Impact on Corruption Detection: International Evidence</div>
+            <canvas id="corruptionChart"></canvas>
+        </div>
+
+        <p>Ukraine's <a href="https://dozorro.org/" target="_blank">AI-powered DOZORRO platform</a> analyzes tender data in real-time, achieving a 26% increase in detecting unfair contract winners compared to manual oversight. Advanced machine learning systems demonstrate <a href="https://epjdatascience.springeropen.com/articles/10.1140/epjds/s13688-025-00569-3" target="_blank">93% precision rates in fraud detection</a>, identifying subtle patterns human auditors might overlook—detecting contractor-official relationships, recognizing unusual pricing, and flagging market deviations.</p>
+        <h2>Our Strategic Advantage</h2>
+
+        <p>Lebanon launched <a href="https://institutdesfinances.gov.lb/sites/default/files/2024-06/Progress-report-Lebanon-Public-Procurement-reform-Jan2024.pdf" target="_blank">TendA</a>, our first national e-procurement platform, providing the digital foundation we need. Our technology sector demonstrates remarkable capability, and our diaspora includes leading researchers at MIT, Stanford, and Google. We have the expertise and infrastructure for success.</p>
+
+        <h2>Our 18-Month Implementation Plan</h2>
+
+        <div class="infographic-container">
+            <div class="infographic-title">Three-Phase Implementation Framework</div>
+            <img src="infographic.png" alt="Implementation Framework" style="max-width: 100%; height: auto;">
+            </svg>
+        </div>
+
+        <p><strong>Phase 1 (Months 1-6):</strong> Establish legal mandate for AI oversight on contracts exceeding $50,000. Form an independent oversight committee with parliament, government, technology sector, civil society, and diaspora representatives ensuring algorithmic fairness.</p>
+
+        <p><strong>Phase 2 (Months 7-12):</strong> Partner with Lebanese technology companies to develop AI algorithms trained on historical data. Our system will assign real-time risk scores, automatically flagging suspicious patterns while training government staff on interpretation and response.</p>
+
+        <p><strong>Phase 3 (Months 13-18):</strong> Launch pilot program for infrastructure contracts exceeding $100,000. Following validation, expand AI oversight across all agencies and launch a public dashboard where every citizen can track procurement transparency metrics.</p>
+
+        <h2>Why This Will Succeed</h2>
+
+        <p>Unlike previous reforms, this initiative creates technological systems where transparency is automatic and corruption becomes significantly more difficult. AI-powered oversight maintains consistency—analyzing every contract with rigorous standards, creating a level playing field while protecting public resources. These systems don't experience fatigue, cannot be intimidated, and have no compromising relationships.</p>
+
+        <div class="action-section">
+            <h2>How You Can Support This Reform</h2>
+            <p>Transparency requires active citizen engagement. I ask for your participation:</p>
+            
+            <ul class="action-list">
+                <li>Sign up for regular updates on implementation progress</li>
+                <li>Contact parliamentary representatives expressing support for AI-powered reform</li>
+                <li>Share this initiative with your networks</li>
+                <li>Monitor results through our public dashboard once launched</li>
+            </ul>
+
+            <div class="action-buttons">
+                <a href="mailto:info@ai.gov.lb" class="action-btn">Subscribe to Updates</a>
+                <a href="#contact" class="action-btn">Contact Your Representative</a>
+            </div>
+        </div>
+
+        <p>I understand Lebanese citizens have grown skeptical of government promises—this skepticism is earned. However, this initiative creates verifiable, measurable outcomes you can monitor independently. Within 18 months, you'll see concrete evidence: contracts flagged for review, potential savings identified, and actions taken in response to AI alerts. Transparency becomes demonstrable reality.</p>
+
+        <p>Lebanon faces a critical choice: continue losing billions while our country struggles, or leverage available technology to build government that genuinely serves its people. This isn't about punishment—it's about prevention and protection. When Lebanon invests in a hospital, that hospital must actually get built. The question isn't whether we can afford to implement this system, but whether we can afford not to. Our children's future depends on today's choices. Together, we can build a Lebanon where public money serves public needs—where every lira represents genuine investment in shared prosperity.</p>
+
+        <div class="footnote">            
+            <p style="margin-top: 20px;"><strong>GenAI Disclosure:</strong> This blog post was developed with assistance from Claude (Anthropic, Claude Sonnet 4) for design refinement and grammar checks. Policy content is based on personal research conducted as noted in the original memorandum.</p>
+        </div>
+    </div>
+
+    <div class="official-footer">
+        <div class="footer-content">
+            <strong>Ministry of Information Technology and Artificial Intelligence</strong><br>
+            Republic of Lebanon<br>
+            <div class="contact-info">
+                Email: info@ai.gov.lb | Tel: +961 1 XXX XXX<br>
+                Beirut, Lebanon
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('corruptionChart').getContext('2d');
+        
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Oversight\n(Traditional)', 'AI-Powered Oversight\n(Ukraine DOZORRO)', 'Advanced ML\nAlgorithms'],
+                datasets: [{
+                    label: 'Fraud Detection Rate (%)',
+                    data: [45, 71, 93],
+                    backgroundColor: [
+                        'rgba(203, 213, 224, 0.8)',
+                        'rgba(66, 153, 225, 0.8)',
+                        'rgba(26, 54, 93, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(113, 128, 150, 1)',
+                        'rgba(43, 108, 176, 1)',
+                        'rgba(196, 30, 58, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Segoe UI', Arial, sans-serif"
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + '%';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            },
+                            font: {
+                                size: 12
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Detection Accuracy',
+                            font: {
+                                size: 13,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        document.getElementById('corruptionChart').onclick = function(evt) {
+            const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            if (points.length) {
+                const firstPoint = points[0];
+                const messages = [
+                    'Traditional manual audits detect approximately 45% of procurement fraud due to limited resources and time constraints.',
+                    'Ukraine\'s DOZORRO platform achieved a 26% improvement over manual methods, reaching 71% detection accuracy through real-time AI analysis.',
+                    'Advanced machine learning systems have demonstrated 93% precision in fraud detection, representing the cutting edge of anti-corruption technology.'
+                ];
+                alert(messages[firstPoint.index]);
+            }
+        };
+    </script>
 </body>
 </html>
